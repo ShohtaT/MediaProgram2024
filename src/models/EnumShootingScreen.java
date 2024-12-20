@@ -6,4 +6,5 @@ public enum EnumShootingScreen {
   GAME1,
   GAME2,
   GAME_OVER,
+  FINISH,
 }
