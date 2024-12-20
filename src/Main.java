@@ -2,12 +2,11 @@
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.util.ArrayList;
 
+import controllers.Game2Controller;
+import controllers.StartController;
+import controllers.Game1Controller;
 import views.ShootingFrame;
-import controllers.Keyboard;
-import models.Enemy;
 import models.EnumShootingScreen;
 
 public class Main {
@@ -25,16 +24,7 @@ public class Main {
     int fps = 30;
     int FPS = 0;
     int FPSCount = 0;
-    int HP = 100; // HP(初期体力100)
     EnumShootingScreen screen = EnumShootingScreen.START;
-    //GAMEに使う関数
-    int playerX, playerY;
-    ArrayList<Enemy> enemies_up = new ArrayList<>();
-    ArrayList<Enemy> enemies_down = new ArrayList<>();
-    playerX = 640;
-    playerY = 560;
-    int time = 0;
-    int gravity_time = 0;
     //------------------------------------------------------------------------------------
     //ここからゲームの動きをループで再現
     while (loop) {
@@ -48,122 +38,26 @@ public class Main {
       startTime = System.currentTimeMillis();
 
       gra.setColor(Color.BLACK);
-      gra.fillRect(0, 0, 1280, 720);                                     //背景色
+      gra.fillRect(0, 0, 1280, 720); //背景色
 
-      switch (screen) {                                                     //ここでゲームの画面を変更する。
+      switch (screen) { //ここでゲームの画面を変更する。
         //--------------------------------------------START画面---------------------------------------------------
         case START:
-          gra.setColor(Color.WHITE);
-          Font font = new Font("SansSelif", Font.PLAIN, 40);
-          gra.setFont(font);
-          FontMetrics metrics = gra.getFontMetrics(font);
-          gra.drawString("yamamoto_1205.Shooting", 640 - (metrics.stringWidth("yamamoto_1205.Shooting") / 2), 300);
-          font = new Font("SansSelif", Font.PLAIN, 20);
-          metrics = gra.getFontMetrics(font);
-          gra.drawString("Press SPACE to Start", 540 - (metrics.stringWidth("Press SPACE to Start") / 2), 500);          //無理やりで真ん中に持ってきてる
-          if (Keyboard.isKeyPressed(KeyEvent.VK_SPACE)) {
-            screen = EnumShootingScreen.GAME1;
-            enemies_down = new ArrayList<>();
-            enemies_up = new ArrayList<>();                               //一応初期化
-            playerX = 640;
-            playerY = 360;
-            time = 100;
-          }
-
+          screen = StartController.call(gra);
           break;
         //--------------------------------------------GAME本編------------------------------------------------------
         case GAME1:
-
-          // 枠(黒、白のfillRectを時期の奥になるよう、ここに記述)
-          gra.setColor(Color.white);
-          gra.fillRect(400, 300, 500, 300);
-          gra.setColor(Color.black);
-          gra.fillRect(410, 310, 480, 280);
-
-          gra.setColor(Color.yellow); // HPバー
-          gra.fillRect(420, 610, HP * 4, 25);
-
-          gra.setColor(Color.red);
-          for (int i = 0; i < enemies_down.size(); i++) {
-            Enemy enemy = enemies_down.get(i);
-            gra.fillRect(enemy.x, enemy.y, 480, 10);
-            enemy.y += 10;
-            if (enemy.y > 580) enemies_down.remove(i);
-            if (!(enemy.x + 480 < playerX || playerX + 30 < enemy.x || enemy.y + 10 < playerY || playerY + 30 < enemy.y)) {
-              HP -= 1; // 1hitHP20減少
-              if (HP == 0) {
-                screen = EnumShootingScreen.GAME_OVER;
-              }
-            }
-          }
-          if (time % 30 == 0) {
-            enemies_down.add(new Enemy(170, 0));
-          }
-
-          gra.setColor(Color.red);
-          for (int i = 0; i < enemies_up.size(); i++) {
-            Enemy enemy = enemies_up.get(i);
-            gra.fillRect(enemy.x, enemy.y, 480, 10);
-            enemy.y -= 10;
-            if (enemy.y <= 0) enemies_up.remove(i);
-            if (!(enemy.x + 480 < playerX || playerX + 30 < enemy.x || enemy.y + 10 < playerY || playerY + 30 < enemy.y)) {
-              HP -= 1; // 1hitHP20減少
-              if (HP == 0) {
-                screen = EnumShootingScreen.GAME_OVER;
-              }
-            }
-          }
-          if (time % 30 == 0) {
-            enemies_up.add(new Enemy(650, 720));
-          }
-          time++;
-
-          gra.setColor(Color.RED);
-          gra.fillRect(playerX, playerY, 30, 30);
-          if (Keyboard.isKeyPressed(KeyEvent.VK_LEFT) && playerX > 410)
-            playerX -= 10;                   //なぜかここで動かしてる....
-          if (Keyboard.isKeyPressed(KeyEvent.VK_RIGHT) && playerX < 860) playerX += 10;
-          if (Keyboard.isKeyPressed(KeyEvent.VK_UP) && playerY > 310) playerY -= 10;
-          if (Keyboard.isKeyPressed(KeyEvent.VK_DOWN) && playerY < 560) playerY += 10;
-          if (time == 500) {
-            screen = EnumShootingScreen.GAME2;
-            enemies_down = new ArrayList<>();
-            enemies_up = new ArrayList<>();                               //一応初期化
-            playerX = 640;
-            playerY = 390;
-            time = 100;
-            gravity_time = 0;
-          }
+          screen = Game1Controller.call(gra);
           break;
         //------------------------------------------------------------------------------------------------------------
         case GAME2:
-          gra.setColor(Color.white);
-          gra.fillRect(400, 300, 500, 300);
-          gra.setColor(Color.black);
-          gra.fillRect(410, 310, 480, 280);
-
-
-          gra.setColor(Color.yellow); // HPバー
-          gra.fillRect(420, 610, HP * 4, 25);
-          gra.setColor(Color.blue);
-          gra.fillRect(playerX, playerY, 30, 30);
-          if (!(Keyboard.isKeyPressed(KeyEvent.VK_UP)) && playerY < 560) {
-            gravity_time++;
-            playerY += gravity_time * (gravity_time - 1);
-          }
-          if (playerY == 560) {
-            gravity_time = 0;
-          }
-          if (Keyboard.isKeyPressed(KeyEvent.VK_LEFT) && playerX > 410) playerX -= 15;
-          if (Keyboard.isKeyPressed(KeyEvent.VK_RIGHT) && playerX < 860) playerX += 15;
-          if (Keyboard.isKeyPressed(KeyEvent.VK_UP) && playerY > 380) playerY -= 10;
-
-          if (playerY > 560) {
-            playerY = 560;
-          }
+          screen = Game2Controller.call(gra);
           break;
         //--------------------------------------------GAMEOVER-------------------------------------------------------
         case GAME_OVER:
+          break;
+        //--------------------------------------------FINISH-------------------------------------------------------
+        case FINISH:
           break;
       }
 
