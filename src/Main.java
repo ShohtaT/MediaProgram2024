@@ -4,7 +4,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
-import java.util.Random;
 
 import views.ShootingFrame;
 import controllers.Keyboard;
@@ -20,7 +19,6 @@ public class Main {
     shootingFrame = new ShootingFrame();
     loop = true;
 
-
     Graphics gra = shootingFrame.panel.image.getGraphics();
     long startTime;           //FPS処理のための初めの時間
     long fpsTime = 0;
@@ -28,18 +26,13 @@ public class Main {
     int FPS = 0;
     int FPSCount = 0;
     int HP = 100; // HP(初期体力100)
-    boolean guard = false; // 無敵時間の変数(if0で普通、if1で無敵)
-    boolean gravity_system = true;
-    boolean gravity = true;
     EnumShootingScreen screen = EnumShootingScreen.START;
     //GAMEに使う関数
     int playerX, playerY;
-    int move;
     ArrayList<Enemy> enemies_up = new ArrayList<>();
     ArrayList<Enemy> enemies_down = new ArrayList<>();
     playerX = 640;
     playerY = 560;
-    Random random = new Random();
     int time = 0;
     int gravity_time = 0;
     //------------------------------------------------------------------------------------
@@ -54,10 +47,8 @@ public class Main {
       FPSCount++;
       startTime = System.currentTimeMillis();
 
-
       gra.setColor(Color.BLACK);
       gra.fillRect(0, 0, 1280, 720);                                     //背景色
-
 
       switch (screen) {                                                     //ここでゲームの画面を変更する。
         //--------------------------------------------START画面---------------------------------------------------
@@ -89,10 +80,8 @@ public class Main {
           gra.setColor(Color.black);
           gra.fillRect(410, 310, 480, 280);
 
-
           gra.setColor(Color.yellow); // HPバー
           gra.fillRect(420, 610, HP * 4, 25);
-
 
           gra.setColor(Color.red);
           for (int i = 0; i < enemies_down.size(); i++) {
@@ -128,7 +117,6 @@ public class Main {
             enemies_up.add(new Enemy(650, 720));
           }
           time++;
-
 
           gra.setColor(Color.RED);
           gra.fillRect(playerX, playerY, 30, 30);
@@ -179,13 +167,10 @@ public class Main {
           break;
       }
 
-
       gra.setFont(new Font("SansSerif", Font.PLAIN, 10));
       gra.drawString(FPS + "FPS", 0, 620);
 
-
       shootingFrame.panel.draw();
-
 
       try {
         long runTime = System.currentTimeMillis() - startTime;
@@ -200,4 +185,3 @@ public class Main {
     }
   }
 }
-

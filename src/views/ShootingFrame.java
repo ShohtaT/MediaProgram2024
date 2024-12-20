@@ -6,7 +6,6 @@ import java.awt.event.WindowEvent;
 
 import controllers.Keyboard;
 
-
 public class ShootingFrame extends JFrame {
   public ShootingPanel panel;
 
@@ -14,7 +13,6 @@ public class ShootingFrame extends JFrame {
 
     panel = new ShootingPanel();
     this.add(panel);
-
 
     this.addWindowListener(new WindowAdapter() {
       //@Override
