@@ -1,32 +1,46 @@
+import controllers.Game1Controller;
 import controllers.Keyboard;
 import controllers.StartCursorController;
 import models.EnumShootingScreen;
+import views.Game1View;
 import views.StartView;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class GameApp extends JPanel {
-  private EnumShootingScreen screen = EnumShootingScreen.START; // 現在の画面状態
+  private EnumShootingScreen screen = EnumShootingScreen.START_MENU; // 現在の画面状態
+
   private final StartCursorController startController;
+  private final Game1Controller game1Controller;
+
   private final StartView startView;
+  private final Game1View shootingView;
 
   public GameApp() {
     this.startController = new StartCursorController();
     this.startView = new StartView(startController);
+
+    this.game1Controller = new Game1Controller();
+    this.shootingView = new Game1View(game1Controller);
   }
 
   @Override
-  protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
+  protected void paintComponent(Graphics graphics) {
+    super.paintComponent(graphics);
+
+    // パネルの背景
+    graphics.setColor(Color.BLACK);
+    graphics.fillRect(0, 0, 1280, 720);
 
     // 現在の画面に応じた描画処理
+    // `render` メソッドで画面遷移を管理
     switch (screen) {
-      case START:
-        screen = startView.render(g); // `render` メソッドで画面遷移を管理
+      case START_MENU:
+        screen = startView.render(graphics);
         break;
       case GAME1:
-        // TODO: Not implemented yet
+        screen = shootingView.render(graphics);
         break;
       case GAME2:
         // TODO: Not implemented yet

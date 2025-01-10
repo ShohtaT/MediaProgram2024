@@ -2,7 +2,7 @@ package models;
 
 
 public enum EnumShootingScreen {
-  START,
+  START_MENU,
   GAME1,
   GAME2,
   GAME_OVER,

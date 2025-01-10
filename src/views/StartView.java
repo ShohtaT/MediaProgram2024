@@ -2,7 +2,6 @@ package views;
 
 import controllers.StartCursorController;
 import models.EnumShootingScreen;
-import models.StartCursor;
 
 import java.awt.*;
 
@@ -15,10 +14,6 @@ public class StartView {
 
   public EnumShootingScreen render(Graphics graphics) {
     int HP = 100; // HP(初期体力100)
-
-    // パネルの背景
-    graphics.setColor(Color.BLACK);
-    graphics.fillRect(0, 0, 1280, 720);
 
     // 背景の描画
     graphics.setColor(Color.white);
@@ -61,10 +56,11 @@ public class StartView {
     graphics.fillRect(controller.getCursor().getX(), 600, 30, 30); // Controller の Cursor を使用
 
     // Enterキーが押された場合の描画と遷移
+    // FIXME: 今はどこを選択しても GAME1 に遷移するようになっている
     if (controller.isEnterPressed()) {
       return EnumShootingScreen.GAME1;
     }
 
-    return EnumShootingScreen.START;
+    return EnumShootingScreen.START_MENU;
   }
 }
