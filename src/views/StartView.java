@@ -1,34 +1,41 @@
-package controllers;
+package views;
 
+import controllers.StartCursorController;
 import models.EnumShootingScreen;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
 
-public class StartController {
+public class StartView {
+  private final StartCursorController controller;
 
-  public static EnumShootingScreen call(Graphics graphics) {
+  public StartView(StartCursorController controller) {
+    this.controller = controller;
+  }
+
+  public EnumShootingScreen render(Graphics graphics) {
     int HP = 100; // HP(初期体力100)
-    int playerX = 640;
 
+    // 背景の描画
     graphics.setColor(Color.white);
     graphics.fillRect(210, 300, 800, 150);
     graphics.setColor(Color.black);
     graphics.fillRect(220, 310, 780, 130);
 
-    graphics.setColor(Color.yellow); // HPバー
+    // HPバー
+    graphics.setColor(Color.yellow);
     graphics.fillRect(460, 460, HP * 3, 25);
-    graphics.setColor(Color.white); // HPバー周りの情報
+    graphics.setColor(Color.white);
     Font YourInfo = new Font("Serif", Font.BOLD, 30);
     graphics.setFont(YourInfo);
     graphics.drawString("YOU", 225, 480);
-    graphics.drawString("LV ??", 325, 480); // HPに関する情報
+    graphics.drawString("LV ??", 325, 480);
     Font HPBar = new Font("Dialog", Font.BOLD, 20);
     graphics.setFont(HPBar);
     graphics.drawString("HP", 425, 480);
     graphics.drawString(" HP  /  100", 850, 480);
 
-    for (int i = 0; i < 800; i += 200) { // for文で画面下4つのコマンドボタン作成
+    // コマンドボタン
+    for (int i = 0; i < 800; i += 200) {
       graphics.setColor(Color.ORANGE);
       graphics.drawRect(230 + i, 580, 180, 70);
       Font CommandButton = new Font("Monospaced", Font.BOLD, 41);
@@ -42,21 +49,18 @@ public class StartController {
       } else if (i == 600) {
         graphics.drawString("MERCY", 300 + i, 630);
       }
-    } // ここまでが4コマンドボタン
+    }
 
-    graphics.setColor(Color.red); // ここから4行間が自機の動き
-    graphics.fillRect(playerX, 600, 30, 30);
-    if (Keyboard.isKeyPressed(KeyEvent.VK_LEFT)) playerX -= 200;                   //なぜかここで動かしてる....
-    if (Keyboard.isKeyPressed(KeyEvent.VK_RIGHT)) playerX += 200;
+    // プレイヤーの描画
+    graphics.setColor(Color.red);
+    graphics.fillRect(controller.getCursor().getX(), 600, 30, 30); // Controller の Cursor を使用
 
-    if (Keyboard.isKeyPressed(KeyEvent.VK_ENTER)) {
-      graphics.setColor(Color.white);
-      Font WhiteWindow = new Font("Sansserif", Font.BOLD, 20);
-      graphics.setFont(WhiteWindow);
-      graphics.drawString("ENEMY", 250, 350);
+    // Enterキーが押された場合の描画と遷移
+    // FIXME: 今はどこを選択しても GAME1 に遷移するようになっている
+    if (controller.isEnterPressed()) {
       return EnumShootingScreen.GAME1;
     }
 
-    return EnumShootingScreen.START;
+    return EnumShootingScreen.START_MENU;
   }
 }

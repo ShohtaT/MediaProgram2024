@@ -2,27 +2,24 @@ package controllers;
 
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.awt.event.KeyListener;
+import java.util.HashSet;
 
-public class Keyboard extends KeyAdapter implements KeyListener {
+public class Keyboard extends KeyAdapter {
 
-  private static ArrayList<Integer> pressedButtons = new ArrayList<>();
+  private static HashSet<Integer> pressedButtons = new HashSet<>();
 
-  public static boolean isKeyPressed(int keyCode) {
+  // キーが押されているかを確認
+  public static synchronized boolean isKeyPressed(int keyCode) {
     return pressedButtons.contains(keyCode);
-
   }
 
   @Override
-  public void keyPressed(KeyEvent e) {
-    super.keyPressed(e);
-    if (!pressedButtons.contains(e.getKeyCode())) pressedButtons.add(e.getKeyCode());
+  public synchronized void keyPressed(KeyEvent e) {
+    pressedButtons.add(e.getKeyCode());
   }
 
   @Override
-  public void keyReleased(KeyEvent e) {
-    super.keyReleased(e);
-    pressedButtons.remove((Integer) e.getKeyCode());
+  public synchronized void keyReleased(KeyEvent e) {
+    pressedButtons.remove(e.getKeyCode());
   }
 }
