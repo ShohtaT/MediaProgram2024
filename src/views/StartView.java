@@ -7,14 +7,16 @@ import java.awt.*;
 
 public class StartView {
   private final StartCursorController controller;
-
+  DrawPlayer drawsans = new DrawPlayer();
+  public int phase =0;
   public StartView(StartCursorController controller) {
     this.controller = controller;
   }
 
   public EnumShootingScreen render(Graphics graphics) {
     int HP = 100; // HP(初期体力100)
-
+ 
+    drawsans.paintSans(580, 30, graphics);
     // 背景の描画
     graphics.setColor(Color.white);
     graphics.fillRect(210, 300, 800, 150);
@@ -58,7 +60,18 @@ public class StartView {
     // Enterキーが押された場合の描画と遷移
     // FIXME: 今はどこを選択しても GAME1 に遷移するようになっている
     if (controller.isEnterPressed()) {
-      return EnumShootingScreen.GAME1;
+      
+      switch (phase) {
+        case 0:
+        phase =phase +1;
+          return EnumShootingScreen.GAME1;
+        case 1:
+        phase =phase +1;
+          return EnumShootingScreen.GAME2;
+        case 2:
+        return EnumShootingScreen.FINISH;
+      }
+      
     }
 
     return EnumShootingScreen.START_MENU;

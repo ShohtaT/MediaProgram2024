@@ -1,10 +1,13 @@
 import controllers.Game1Controller;
+import controllers.Game2Controller;
 import controllers.Keyboard;
 import controllers.StartCursorController;
 import models.EnumShootingScreen;
+import views.FinishView;
+import views.Game2View;
 import views.Game1View;
 import views.StartView;
-
+import views.GAMEOVERView;
 import javax.swing.*;
 import java.awt.*;
 
@@ -13,9 +16,13 @@ public class GameApp extends JPanel {
 
   private final StartCursorController startController;
   private final Game1Controller game1Controller;
+  private final Game2Controller game2Controller;
 
   private final StartView startView;
   private final Game1View shootingView;
+  private final Game2View shooting2View;
+  private final FinishView finishView;
+  private final GAMEOVERView gameover;
 
   public GameApp() {
     this.startController = new StartCursorController();
@@ -23,6 +30,10 @@ public class GameApp extends JPanel {
 
     this.game1Controller = new Game1Controller();
     this.shootingView = new Game1View(game1Controller);
+    this.game2Controller = new Game2Controller();
+    this.shooting2View = new Game2View(game2Controller);
+    this.finishView = new FinishView(game1Controller);
+    this.gameover = new GAMEOVERView(game1Controller);
   }
 
   @Override
@@ -43,13 +54,13 @@ public class GameApp extends JPanel {
         screen = shootingView.render(graphics);
         break;
       case GAME2:
-        // TODO: Not implemented yet
+        screen = shooting2View.render(graphics);
         break;
       case GAME_OVER:
-        // TODO: Not implemented yet
+        screen = gameover.render(graphics);
         break;
       case FINISH:
-        // TODO: Not implemented yet
+       screen = finishView.render(graphics);
         break;
     }
   }
