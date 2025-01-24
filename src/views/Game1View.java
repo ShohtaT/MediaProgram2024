@@ -48,7 +48,7 @@ public class Game1View {
                if(enemy.y<=0)enemies_up.remove(i);
                   if(!(enemy.x +480 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+10 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
                       if(!guard){
-                          player.Down_HP(50);
+                          player.Down_HP(20);
                           guard = true; // mutekizikannhuyo
                           new Timer(5000, e -> guard = false).start(); // 5byougo,mutekikaizyo
                          if(player.return_HP()==0){return EnumShootingScreen.GAME_OVER;}// HP==0de,GAMEOVER
@@ -63,7 +63,7 @@ public class Game1View {
                 if(enemy.y>580)enemies_down.remove(i);
                 if(!(enemy.x +480 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+10 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
                   if(!guard){
-                      player.Down_HP(50);
+                      player.Down_HP(20);
                       guard = true; // mutekizikannhuyo
                       new Timer(5000, e -> guard = false).start(); // 5byougo,mutekikaizyo
                       if(player.return_HP()==0){return EnumShootingScreen.GAME_OVER;}// HP==0de,GAMEOVER

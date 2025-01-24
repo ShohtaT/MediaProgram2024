@@ -44,7 +44,7 @@ public class Game2View {
       enemy.Show_enemy(graphics, 15, 50);
       enemy.left_Enemy(5);   
       if(enemy.y<=0)enemies_1.remove(i);
-         if(!(enemy.x +480 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+10 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
+         if(!(enemy.x +15 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+50 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
              if(!guard){
                  player.Down_HP(20);
                  guard = true; // mutekizikannhuyo
@@ -59,7 +59,7 @@ public class Game2View {
       enemy.Show_enemy(graphics, 15, 50);
       enemy.right_Enemy(5);
       if(enemy.y<=0)enemies_2.remove(i);
-         if(!(enemy.x +480 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+10 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
+         if(!(enemy.x +15 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+50 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
              if(!guard){
                  player.Down_HP(20);
                  guard = true; // mutekizikannhuyo
@@ -74,7 +74,7 @@ public class Game2View {
       enemy.Show_enemy(graphics, 15, 200);
       enemy.left_Enemy(5);
       if(enemy.y<=0)enemies_3.remove(i);
-         if(!(enemy.x +480 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+10 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
+         if(!(enemy.x +15 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+200 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
              if(!guard){
                  player.Down_HP(20);
                  guard = true; // mutekizikannhuyo
@@ -88,7 +88,7 @@ public class Game2View {
       enemy.Show_enemy(graphics, 15, 200);
       enemy.right_Enemy(5);    
       if(enemy.y<=0)enemies_4.remove(i);
-         if(!(enemy.x +480 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+10 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
+         if(!(enemy.x +15 <player.get_playerX() || player.get_playerX()+30<enemy.x ||enemy.y+200 <player.get_playerY() || player.get_playerY() +30<enemy.y)){
              if(!guard){
                  player.Down_HP(20);
                  guard = true; // mutekizikannhuyo
