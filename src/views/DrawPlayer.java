@@ -5,6 +5,7 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.IOException;
+import java.util.Objects;
 
 public class DrawPlayer extends JPanel {
   private Image img;
@@ -13,8 +14,8 @@ public class DrawPlayer extends JPanel {
   // コンストラクタで画像をロード
   public DrawPlayer() {
     try {
-      img = ImageIO.read(getClass().getResource("/views/A.jpg"));
-      img_sans = ImageIO.read(getClass().getResource("/views/B.jpg"));
+      img = ImageIO.read(Objects.requireNonNull(getClass().getResource("./A.jpg")));
+      img_sans = ImageIO.read(Objects.requireNonNull(getClass().getResource("./B.jpg")));
     } catch (IOException e) {
       throw new RuntimeException(e);
     }catch (NullPointerException e) {
